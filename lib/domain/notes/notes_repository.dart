@@ -6,5 +6,5 @@ import 'package:oxidized/oxidized.dart';
 abstract class INotesRepository {
   Future<Result<Unit, NotesFailure>> addNote(Note note, User user);
 
-  Stream<Result<List<Note>, NotesFailure>> subscribeToNotes();
+  Future<Result<List<Note>, NotesFailure>> getAllNotes();
 }

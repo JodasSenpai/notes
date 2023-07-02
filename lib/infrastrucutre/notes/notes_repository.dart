@@ -4,6 +4,7 @@ import 'package:notes/domain/notes/note/note.dart';
 import 'package:notes/domain/notes/notes_failure.dart';
 import 'package:notes/domain/notes/notes_repository.dart';
 import 'package:notes/infrastrucutre/notes/datasource/notes_remote_data_source.dart';
+import 'package:notes/infrastrucutre/notes/model/notes_dto.dart';
 import 'package:oxidized/src/result.dart';
 import 'package:oxidized/src/unit.dart';
 
@@ -31,8 +32,12 @@ class NotesRepositroy implements INotesRepository {
   }
 
   @override
-  Stream<Result<List<Note>, NotesFailure>> subscribeToNotes() {
-    // TODO: implement subscribeToNotes
-    throw UnimplementedError();
+  Future<Result<List<Note>, NotesFailure>> getAllNotes() async {
+    try {
+      final response = await notesRemoteDataSource.getAllNotes();
+      return Ok(response.map((e) => e.toDomain()).toList());
+    } catch (e) {
+      return Err(NotesFailure.serverError(e.toString()));
+    }
   }
 }

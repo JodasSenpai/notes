@@ -5,7 +5,7 @@ abstract class IFirestoreBackendApi {
   Future<void> addNote(
       {required String user, required Map<String, dynamic> data});
 
-  Future<Map<String, dynamic>> subscribeToNotes();
+  Future<List<Map<String, dynamic>>> getAllNotes();
 }
 
 @LazySingleton(as: IFirestoreBackendApi)
@@ -19,12 +19,26 @@ class FirestoreBackendApi implements IFirestoreBackendApi {
   @override
   Future<void> addNote(
       {required String user, required Map<String, dynamic> data}) async {
-    await firestore.collection(user).add(data);
+    final documentRef = firestore.collection("notes").doc(user);
+    DocumentSnapshot documentSnapshot = await documentRef.get();
+    if (!documentSnapshot.exists) {
+      await firestore.collection("notes").doc(user).set({"notesList": []});
+    }
+    await firestore.collection("notes").doc(user).update({
+      "notesList": FieldValue.arrayUnion([data])
+    });
   }
 
   @override
-  Future<Map<String, dynamic>> subscribeToNotes() {
-    // TODO: implement subscribeToNotes
-    throw UnimplementedError();
+  Future<List<Map<String, dynamic>>> getAllNotes() async {
+    final documents = await firestore.collection("notes").get();
+    List<Map<String, dynamic>> allNotes = [];
+    for (var document in documents.docs) {
+      final userNotes = document.data();
+      for (var note in userNotes["notesList"]) {
+        allNotes.add(note);
+      }
+    }
+    return allNotes;
   }
 }

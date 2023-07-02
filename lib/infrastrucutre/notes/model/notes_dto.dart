@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:notes/domain/core/value_objects.dart';
 import 'package:notes/domain/notes/note/note.dart';
@@ -11,11 +12,14 @@ class NoteDto with _$NoteDto {
       {String? id,
       required String lang,
       required String username,
-      required String noteValue,
+      required String note,
       required DateTime createTime}) = _NoteDto;
 
-  factory NoteDto.fromJson(Map<String, dynamic> json) =>
-      _$NoteDtoFromJson(json);
+  factory NoteDto.fromJson(Map<String, dynamic> json) => NoteDto(
+      lang: json["lang"],
+      username: json["username"],
+      note: json["note"],
+      createTime: json["createTime"].toDate());
 }
 
 extension NoteDtoX on NoteDto {
@@ -24,7 +28,7 @@ extension NoteDtoX on NoteDto {
         id: id != null ? UniqueStringId.fromUniqueString(id!) : null,
         lang: StringSingleLine(lang),
         username: StringSingleLine(username),
-        noteValue: StringMultiLine(noteValue),
+        noteValue: StringMultiLine(note),
         createTime: Date(createTime));
   }
 }
