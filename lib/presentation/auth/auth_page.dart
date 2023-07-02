@@ -48,6 +48,7 @@ class AuthPage extends ConsumerWidget {
       messages: LoginMessages(
           loginButton: "Prijava",
           signupButton: "Registracija",
+
           passwordHint: "Geslo",
           confirmPasswordHint: "Potrdi geslo"),
     );

@@ -25,6 +25,7 @@ dependencies:
   easy_localization: ^3.0.2
   firebase_core: ^2.14.0
   firebase_auth: ^4.6.3
+  cloud_firestore: ^4.8.2
   google_fonts: ^5.0.0
   flutter_login: ^4.1.1
   responsive_framework: ^1.0.0

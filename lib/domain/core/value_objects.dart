@@ -4,7 +4,6 @@ import 'package:notes/domain/core/failures.dart';
 import 'package:notes/domain/core/value_validators.dart';
 import 'package:oxidized/oxidized.dart';
 
-
 import 'errors.dart';
 
 @immutable
@@ -16,7 +15,7 @@ abstract class ValueObject<T extends Object> implements IValidatable {
   /// Throws [UnexpectedValueError] containing the [ValueFailure]
   T getOrCrash() {
     final result =
-        value.fold((ok) => ok, (error) => throw UnexpectedValueError(error));
+    value.fold((ok) => ok, (error) => throw UnexpectedValueError(error));
     return result.expect("UnexpectedValueError");
   }
 
@@ -85,4 +84,30 @@ class StringSingleLine extends ValueObject<String> {
   }
 
   const StringSingleLine._(this.value);
+}
+
+class StringMultiLine extends ValueObject<String> {
+  @override
+  final Result<String, ValueFailure<String>> value;
+
+  factory StringMultiLine(String input) {
+    return StringMultiLine._(
+      validateMultiLine(input),
+    );
+  }
+
+  const StringMultiLine._(this.value);
+}
+
+class Date extends ValueObject<DateTime> {
+  @override
+  final Result<DateTime, ValueFailure<DateTime>> value;
+
+  factory Date(DateTime input){
+    return Date._(
+      validateDate(input),
+    );
+  }
+
+  const Date._(this.value);
 }
