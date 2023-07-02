@@ -8,7 +8,7 @@ abstract class INotesRemoteDataSource {
 
 @LazySingleton(as: INotesRemoteDataSource)
 class NotesRemoteDataSource implements INotesRemoteDataSource {
-  final FirestoreBackendApi firestoreBackendApi;
+  final IFirestoreBackendApi firestoreBackendApi;
 
   NotesRemoteDataSource({required this.firestoreBackendApi});
 

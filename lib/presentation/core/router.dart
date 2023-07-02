@@ -14,14 +14,13 @@ class AppRouter extends $AppRouter {
         path: "",
         page: HomeRoute.page,
       ),
-
+      AutoRoute(path: "addNote", page: AddNoteRoute.page)
     ]),
     AutoRoute(
       path: "/auth",
       page: AuthRouter.page,
       children: [
         AutoRoute(path: "", page: AuthRoute.page),
-
       ],
     ),
   ];

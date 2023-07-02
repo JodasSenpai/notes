@@ -2,8 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:injectable/injectable.dart';
 
 abstract class IFirestoreBackendApi {
-  Future<void> addNote({required String user,
-    required Map<String, dynamic> data});
+  Future<void> addNote(
+      {required String user, required Map<String, dynamic> data});
 
   Future<Map<String, dynamic>> subscribeToNotes();
 }
@@ -17,8 +17,8 @@ class FirestoreBackendApi implements IFirestoreBackendApi {
   });
 
   @override
-  Future<void> addNote({required String user,
-    required Map<String, dynamic> data}) async {
+  Future<void> addNote(
+      {required String user, required Map<String, dynamic> data}) async {
     await firestore.collection(user).add(data);
   }
 

@@ -28,6 +28,7 @@ dependencies:
   cloud_firestore: ^4.8.2
   google_fonts: ^5.0.0
   flutter_login: ^4.1.1
+  drop_down_list: ^0.0.5
   responsive_framework: ^1.0.0
 
 

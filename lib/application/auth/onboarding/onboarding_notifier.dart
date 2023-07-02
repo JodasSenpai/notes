@@ -5,17 +5,12 @@ import 'package:notes/domain/auth/auth_repository.dart';
 import 'package:notes/domain/auth/value_objects.dart';
 import 'package:oxidized/oxidized.dart';
 
-
 class OnboardingNotifier extends StateNotifier<OnboardingState> {
   OnboardingNotifier({required this.authRepositroy, required this.authNotifier})
-      : super(OnboardingState.initial()) {
-    //devLogin();
-  }
+      : super(OnboardingState.initial()) {}
 
   final IAuthRepositroy authRepositroy;
   final AuthNotifier authNotifier;
-
-
 
   void setEmail(String email) {
     state = state.copyWith(email: EmailAddress(email));

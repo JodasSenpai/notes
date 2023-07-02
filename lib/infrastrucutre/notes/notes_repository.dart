@@ -7,9 +7,9 @@ import 'package:notes/infrastrucutre/notes/datasource/notes_remote_data_source.d
 import 'package:oxidized/src/result.dart';
 import 'package:oxidized/src/unit.dart';
 
-@LazySingleton(as: INotesRepositroy)
-class NotesRepositroy implements INotesRepositroy {
-  final NotesRemoteDataSource notesRemoteDataSource;
+@LazySingleton(as: INotesRepository)
+class NotesRepositroy implements INotesRepository {
+  final INotesRemoteDataSource notesRemoteDataSource;
 
   NotesRepositroy({required this.notesRemoteDataSource});
 
