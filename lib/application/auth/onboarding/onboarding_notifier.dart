@@ -12,12 +12,22 @@ class OnboardingNotifier extends StateNotifier<OnboardingState> {
   final IAuthRepositroy authRepositroy;
   final AuthNotifier authNotifier;
 
-  void setEmail(String email) {
+  String? setEmail(String email) {
     state = state.copyWith(email: EmailAddress(email));
+    if (state.email.isValid()) {
+      return null;
+    } else {
+      return "Bad email";
+    }
   }
 
-  void setPassword(String password) {
+  String? setPassword(String password) {
     state = state.copyWith(password: Password(password));
+    if (state.password.isValid()) {
+      return null;
+    } else {
+      return "Bad password";
+    }
   }
 
   void registerWithGoogle() {
@@ -40,13 +50,15 @@ class OnboardingNotifier extends StateNotifier<OnboardingState> {
             serverError: (message) => print(failure))));
   }
 
-  void loginWithEmailAndPassword() {
-    final response = authRepositroy.loginUserWithEmailAndPassword(
+  Future<String?> loginWithEmailAndPassword() async {
+    final response = await authRepositroy.loginUserWithEmailAndPassword(
         email: state.email, password: state.password);
-    response.when(
-        ok: (user) => authNotifier.authenticate(user),
-        err: (failure) => print(failure.maybeWhen(
-            orElse: () => {print("error")},
-            serverError: (message) => print(failure))));
+    return response.when(ok: (user) {
+      authNotifier.authenticate(user);
+      return null;
+    }, err: (failure) {
+      return failure.maybeMap(
+          orElse: () => "error", serverError: (message) => failure.toString());
+    });
   }
 }

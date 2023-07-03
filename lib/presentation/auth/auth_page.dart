@@ -15,32 +15,31 @@ class AuthPage extends ConsumerWidget {
     var onboarding = ref.watch(onboardingNotifierProvider);
     return FlutterLogin(
       title: 'Notes',
-
-      onLogin: ((loginData) {
-        ref
-            .read(onboardingNotifierProvider.notifier).setEmail(loginData.name);
-        ref
-            .read(onboardingNotifierProvider.notifier).setPassword(loginData.password);
+      onSubmitAnimationCompleted: () {},
+      onLogin: ((loginData) async {
+        /*ref.read(onboardingNotifierProvider.notifier).setEmail(loginData.name);
         ref
             .read(onboardingNotifierProvider.notifier)
+            .setPassword(loginData.password);*/
+        final result = await ref
+            .read(onboardingNotifierProvider.notifier)
             .loginWithEmailAndPassword();
+        return result;
       }),
       onSignup: (registerData) {
-        ref
-            .read(onboardingNotifierProvider.notifier).setEmail(registerData.name!);
-        ref
-            .read(onboardingNotifierProvider.notifier).setPassword(registerData.password!);
         ref
             .read(onboardingNotifierProvider.notifier)
             .registerWithEmailAndPassword();
       },
       userValidator: (value) {
-
-        return null;
+        final validation =
+        ref.read(onboardingNotifierProvider.notifier).setEmail(value!);
+        return validation;
       },
       passwordValidator: ((value) {
-
-        return null;
+        final validation =
+        ref.read(onboardingNotifierProvider.notifier).setPassword(value!);
+        return validation;
       }),
       onRecoverPassword: (string) {},
       hideForgotPasswordButton: true,
@@ -48,7 +47,6 @@ class AuthPage extends ConsumerWidget {
       messages: LoginMessages(
           loginButton: "Prijava",
           signupButton: "Registracija",
-
           passwordHint: "Geslo",
           confirmPasswordHint: "Potrdi geslo"),
     );
