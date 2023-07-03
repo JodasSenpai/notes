@@ -1,6 +1,6 @@
 import 'package:injectable/injectable.dart';
-import 'package:notes/infrastrucutre/core/firestore_backend_api.dart';
-import 'package:notes/infrastrucutre/notes/model/notes_dto.dart';
+import 'package:notes/infrastructure/core/firestore_backend_api.dart';
+import 'package:notes/infrastructure/notes/model/notes_dto.dart';
 
 abstract class INotesRemoteDataSource {
   Future<void> addNote(

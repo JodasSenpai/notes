@@ -3,8 +3,8 @@ import 'package:notes/domain/auth/user/user.dart';
 import 'package:notes/domain/notes/note/note.dart';
 import 'package:notes/domain/notes/notes_failure.dart';
 import 'package:notes/domain/notes/notes_repository.dart';
-import 'package:notes/infrastrucutre/notes/datasource/notes_remote_data_source.dart';
-import 'package:notes/infrastrucutre/notes/model/notes_dto.dart';
+import 'package:notes/infrastructure/notes/datasource/notes_remote_data_source.dart';
+import 'package:notes/infrastructure/notes/model/notes_dto.dart';
 import 'package:oxidized/src/result.dart';
 import 'package:oxidized/src/unit.dart';
 

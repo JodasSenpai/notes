@@ -5,9 +5,8 @@ import 'package:notes/application/auth/onboarding/onboarding_state.dart';
 import 'package:notes/core/injection_container.dart';
 import 'package:notes/domain/auth/auth_repository.dart';
 
-
 final onboardingNotifierProvider =
     StateNotifierProvider<OnboardingNotifier, OnboardingState>((ref) =>
         OnboardingNotifier(
-            authRepositroy: sl<IAuthRepositroy>(),
+            authRepository: sl<IAuthRepository>(),
             authNotifier: ref.read(authNotifierProvider.notifier)));

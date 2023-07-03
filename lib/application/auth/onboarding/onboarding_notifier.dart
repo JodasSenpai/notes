@@ -6,10 +6,10 @@ import 'package:notes/domain/auth/value_objects.dart';
 import 'package:oxidized/oxidized.dart';
 
 class OnboardingNotifier extends StateNotifier<OnboardingState> {
-  OnboardingNotifier({required this.authRepositroy, required this.authNotifier})
+  OnboardingNotifier({required this.authRepository, required this.authNotifier})
       : super(OnboardingState.initial()) {}
 
-  final IAuthRepositroy authRepositroy;
+  final IAuthRepository authRepository;
   final AuthNotifier authNotifier;
 
   String? setEmail(String email) {
@@ -31,7 +31,7 @@ class OnboardingNotifier extends StateNotifier<OnboardingState> {
   }
 
   void registerWithGoogle() {
-    final response = authRepositroy.registerUserWithGoogle();
+    final response = authRepository.registerUserWithGoogle();
 
     response.when(
         ok: (user) => authNotifier.authenticate(user),
@@ -41,7 +41,7 @@ class OnboardingNotifier extends StateNotifier<OnboardingState> {
   }
 
   void registerWithEmailAndPassword() {
-    final response = authRepositroy.registerUserWithEmailAndPassword(
+    final response = authRepository.registerUserWithEmailAndPassword(
         email: state.email, password: state.password);
     response.when(
         ok: (user) => authNotifier.authenticate(user),
@@ -51,7 +51,7 @@ class OnboardingNotifier extends StateNotifier<OnboardingState> {
   }
 
   Future<String?> loginWithEmailAndPassword() async {
-    final response = await authRepositroy.loginUserWithEmailAndPassword(
+    final response = await authRepository.loginUserWithEmailAndPassword(
         email: state.email, password: state.password);
     return response.when(ok: (user) {
       authNotifier.authenticate(user);

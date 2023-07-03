@@ -1,6 +1,6 @@
 import 'package:injectable/injectable.dart';
-import 'package:notes/infrastrucutre/auth/model/user/user_dto.dart';
-import 'package:notes/infrastrucutre/core/firebase_backend_api.dart';
+import 'package:notes/infrastructure/auth/model/user/user_dto.dart';
+import 'package:notes/infrastructure/core/firebase_backend_api.dart';
 
 abstract class IAuthRemoteDataSource {
   Future<UserDto> registerUserWithEmailAndPassword(
@@ -9,9 +9,7 @@ abstract class IAuthRemoteDataSource {
   Future<UserDto> registerUserWithGoogle();
 
   Future<UserDto> loginUserWithEmailAndPassword(String email, String password);
-
 }
-
 
 @LazySingleton(as: IAuthRemoteDataSource)
 class AuthRemoteDataSource implements IAuthRemoteDataSource {
@@ -20,14 +18,16 @@ class AuthRemoteDataSource implements IAuthRemoteDataSource {
   AuthRemoteDataSource({required this.firebaseBackendApi});
 
   @override
-  Future<UserDto> loginUserWithEmailAndPassword(String email, String password) async{
+  Future<UserDto> loginUserWithEmailAndPassword(
+      String email, String password) async {
     final response = await firebaseBackendApi.loginUserWithEmailAndPassword(
         email: email, password: password);
     return UserDto.fromFirebaseUser(response!);
   }
 
   @override
-  Future<UserDto> registerUserWithEmailAndPassword(String email, String password) async{
+  Future<UserDto> registerUserWithEmailAndPassword(
+      String email, String password) async {
     final response = await firebaseBackendApi.registerUserWithEmailAndPassword(
         email: email, password: password);
     return UserDto.fromFirebaseUser(response!);
@@ -38,5 +38,4 @@ class AuthRemoteDataSource implements IAuthRemoteDataSource {
     // TODO: implement registerUserWithGoogle
     throw UnimplementedError();
   }
-
 }
