@@ -1,11 +1,11 @@
-
 import 'package:auto_route/auto_route.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:injectable/injectable.dart';
 import 'package:notes/application/auth/auth_notifier_provider.dart';
+import 'package:notes/localization/localization_notifier.dart';
 import 'package:notes/presentation/core/router.dart';
 import 'package:notes/presentation/core/router.gr.dart';
 import 'package:notes/presentation/core/theme.dart';
@@ -14,6 +14,7 @@ import 'package:responsive_framework/responsive_framework.dart';
 
 import 'core/injection_container.dart';
 import 'firebase_options.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
@@ -40,7 +41,7 @@ class NotesApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final auth = ref.watch(authNotifierProvider);
-
+    final _locale = ref.watch(localeProvider);
     return MaterialApp.router(
       title: "T Notes",
       routerDelegate: AutoRouterDelegate.declarative(_appRouter, routes: (_) {
@@ -53,7 +54,7 @@ class NotesApp extends ConsumerWidget {
       routeInformationParser: _appRouter.defaultRouteParser(),
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
-      locale: context.locale,
+      locale: _locale.locale,
       builder: (context, child) => ResponsiveBreakpoints.builder(
         child: Builder(builder: (context) {
           return MaxWidthBox(

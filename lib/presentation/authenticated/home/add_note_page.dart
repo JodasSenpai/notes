@@ -1,11 +1,14 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:drop_down_list/drop_down_list.dart';
 import 'package:drop_down_list/model/selected_list_item.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:notes/application/auth/auth_notifier_provider.dart';
 import 'package:notes/application/notes/add_note/add_note_notifier_provider.dart';
 import 'package:notes/domain/auth/user/user.dart';
+import 'package:notes/localization/localization_notifier.dart';
+import 'package:notes/translations/locale_keys.g.dart';
 
 @RoutePage()
 class AddNotePage extends ConsumerWidget {
@@ -30,16 +33,16 @@ class AddNotePage extends ConsumerWidget {
       DropDown(
         isSearchVisible: false,
         isDismissible: true,
-        bottomSheetTitle: const Text(
-          "Languages",
-          style: TextStyle(
+        bottomSheetTitle: Text(
+          LocaleKeys.language.tr(),
+          style: const TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 20.0,
           ),
         ),
-        submitButtonChild: const Text(
-          'Done',
-          style: TextStyle(
+        submitButtonChild: Text(
+          LocaleKeys.done.tr(),
+          style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,
           ),
@@ -67,39 +70,45 @@ class AddNotePage extends ConsumerWidget {
     final lang = ref.watch(addNoteNotifierProvider(user!)
         .select((value) => value.lang.getOrElse("Choose lang")));
     return Scaffold(
-      appBar: AppBar(title: Text("Add note")),
+      appBar: AppBar(title: Text(LocaleKeys.add_note.tr()), actions: [
+        IconButton(
+            onPressed: () {
+              ref
+                  .read(localeProvider.notifier)
+                  .setLocale(Locale("en"), context);
+            },
+            icon: Icon(Icons.language))
+      ]),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Text("lang:"),
+            Text(LocaleKeys.language.tr()),
             ElevatedButton(
               onPressed: () {
                 onTextFieldTap(context, ref, user!);
               },
               child: Text(lang),
             ),
-            Text("username:"),
+            Text(LocaleKeys.username.tr()),
             TextField(
               controller: TextEditingController(text: user.email.getOrElse("")),
-              onChanged: (value) =>
-                  ref
-                      .read(addNoteNotifierProvider(user!).notifier)
-                      .setUsername(value),
+              onChanged: (value) => ref
+                  .read(addNoteNotifierProvider(user!).notifier)
+                  .setUsername(value),
             ),
-            Text("note:"),
+            Text(LocaleKeys.note.tr()),
             TextField(
               keyboardType: TextInputType.multiline,
               maxLines: null, //grow automatically
-              onChanged: (value) =>
-                  ref
-                      .read(addNoteNotifierProvider(user!).notifier)
-                      .setNoteValue(value),
+              onChanged: (value) => ref
+                  .read(addNoteNotifierProvider(user!).notifier)
+                  .setNoteValue(value),
             ),
             ElevatedButton(
                 onPressed: () {
                   ref.read(addNoteNotifierProvider(user!).notifier).addNote();
                 },
-                child: Text("Add note"))
+                child: Text(LocaleKeys.add_note.tr()))
           ],
         ),
       ),

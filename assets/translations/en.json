@@ -1,3 +1,14 @@
 {
-  "home_page": "HOME PAGE"
+  "notes": "Notes",
+  "login": "Login",
+  "registration": "Registration",
+  "password": "Password",
+  "confirm_password": "Confirm password",
+  "home": "Home",
+  "add_note": "Add note",
+  "get_notes": "Load notes",
+  "language": "Languag",
+  "username": "Username",
+  "note": "Note",
+  "done": "Done"
 }

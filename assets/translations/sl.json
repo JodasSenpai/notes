@@ -1,3 +1,14 @@
 {
-  "home_page": "DOMACA STRAN"
+  "notes": "Sporočila",
+  "login": "Prijava",
+  "registration": "Registracija",
+  "password": "Geslo",
+  "confirm_password": "Potrdi geslo",
+  "home": "Doma",
+  "add_note": "Dodaj sporočilo",
+  "get_notes": "Naloži sporočila",
+  "language": "Jezik",
+  "username": "Uporabniško ime",
+  "note": "Sporočilo",
+  "done": "Potrdi"
 }
